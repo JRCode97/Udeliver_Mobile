@@ -26,15 +26,44 @@ public class CustomerController {
 		return cs.createCustomer(customer);
 	}
 	@SuppressWarnings("unchecked")
-	@GetMapping(value= {"/customers","/customers/{id}","/customers{address}/{zip}"})
-	public <T>T getCustomer(@PathVariable(required=false)Integer id,@RequestParam(required=false)String address,@RequestParam(required=false)String zip){
+	@GetMapping(value= {"/customers","/customers/{id}","/customers/{address}/{zip}","/customers/driver/{driverId}"})
+	public <T>T getCustomer(@PathVariable(required=false)Integer id,@RequestParam(required=false)String address,@RequestParam(required=false)String zip,@RequestParam(required=false)Integer driverId){
 		if(id != null) {
 			return (T) cs.getCustomerById(id);
 		}
 		else if (address != null && zip != null) {
 			return (T) cs.getCustomerByAddress(address, zip);
 		}
+		else if(driverId != null)
+		{
+			return (T) cs.getCustomerByDriverId(driverId);
+		}else if(id == null && address==null && zip==null && driverId==null) {
+			return (T) cs.getAllCustomers();
+		}
 		return null;
+	}
+	@SuppressWarnings("unchecked")
+	@GetMapping(value= {"/customers/towns/tip/{id}","/customers/towns/name/{driverId}"})
+	public <T>T getBest(@PathVariable(required=false) Integer id,@PathVariable(required=false) Integer driverId){
+		if(id!=null) {
+			return (T) cs.getBestTownTotals(id);
+		}
+		else if(driverId!=null) {
+			return (T) cs.getBestTownNames(driverId);
+		}
+		return null;
+		
+	}	@SuppressWarnings("unchecked")
+	@GetMapping(value= {"/customers/avg/tip/{id}","/customers/avg/address/{driverId}"})
+	public <T>T getBestAvg(@PathVariable(required=false) Integer id,@PathVariable(required=false) Integer driverId){
+		if(id!=null) {
+			return (T) cs.getBestAvgTip(id);
+		}
+		else if(driverId!=null) {
+			return (T) cs.getBestAvgAddress(driverId);
+		}
+		return null;
+		
 	}
 	@PutMapping(value="/customers")
 	public Customer updateCustomer(@RequestBody Customer customer) {

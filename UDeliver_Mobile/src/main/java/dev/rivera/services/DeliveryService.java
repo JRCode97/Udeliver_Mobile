@@ -1,5 +1,6 @@
 package dev.rivera.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,13 @@ public class DeliveryService implements DeliveryServiceI {
 	@Override
 	public void deleteDelivery(Delivery delivery) {
 			dr.delete(delivery);
+	}
+
+	@Override
+	public List<Delivery> findDeliveriesByDate(int id) {
+		Date d = new Date();
+		long currentTime = d.getTime();
+		return dr.getDeliveries(currentTime-604800000,currentTime+86400000,id);
 	}
 
 }

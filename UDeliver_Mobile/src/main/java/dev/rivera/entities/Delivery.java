@@ -1,8 +1,13 @@
 package dev.rivera.entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="delivery")
@@ -14,21 +19,24 @@ public class Delivery {
 	@Column(name="tip")
 	private double tip;
 	@Column(name="order_time")
-	private LocalDateTime orderTime;
+	private long orderTime;
 	@ManyToOne
 	@JoinColumn(name="customer_id")
+	@JsonIgnoreProperties({"deliveries"})
 	private Customer customer;
 	@ManyToOne
 	@JoinColumn(name="driver_id")
+	@JsonIgnoreProperties({"restaurants"})
 	private Driver driver;
 	@ManyToOne
 	@JoinColumn(name="restaurant_id")
+	@JsonIgnoreProperties({"driver","deliveries"})
 	private Restaurant restaurant;
 	public Delivery() {
 		super();
 	}
 
-	public Delivery(int id, double tip, LocalDateTime orderTime, Customer customer, Driver driver,
+	public Delivery(int id, double tip, long orderTime, Customer customer, Driver driver,
 			Restaurant restaurant) {
 		super();
 		this.id = id;
@@ -38,7 +46,7 @@ public class Delivery {
 		this.driver = driver;
 		this.restaurant = restaurant;
 	}
-
+	//@JsonBackReference
 	public Restaurant getRestaurant() {
 		return restaurant;
 	}
@@ -59,18 +67,20 @@ public class Delivery {
 	public void setTip(double tip) {
 		this.tip = tip;
 	}
-	public LocalDateTime getOrderTime() {
+	public long getOrderTime() {
 		return orderTime;
 	}
-	public void setOrderTime(LocalDateTime orderTime) {
+	public void setOrderTime(long orderTime) {
 		this.orderTime = orderTime;
 	}
+	
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	//@JsonBackReference
 	public Driver getDriver() {
 		return driver;
 	}

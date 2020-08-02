@@ -8,7 +8,7 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>dev.cuny</groupId>
+	<groupId>dev.rivera</groupId>
 	<artifactId>UDeliver_Mobile</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>UDeliver_Mobile</name>

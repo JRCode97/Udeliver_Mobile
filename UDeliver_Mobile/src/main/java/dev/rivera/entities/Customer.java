@@ -6,6 +6,9 @@ import java.util.TreeSet;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -23,7 +26,8 @@ public class Customer {
 	private String zip;
 	@OneToMany(mappedBy="customer", fetch=FetchType.LAZY)
 	private List<Delivery> deliveries;
-	@ManyToMany(mappedBy="customers")
+	@ManyToMany(mappedBy="customers",fetch=FetchType.EAGER)
+	@JsonIgnore
 	private Set<Restaurant> restaurants = new TreeSet<Restaurant>();
 	public Customer() {
 		super();
@@ -69,6 +73,7 @@ public class Customer {
 	public void setZip(String zip) {
 		this.zip = zip;
 	}
+	//@JsonManagedReference
 	public List<Delivery> getDeliveries() {
 		return deliveries;
 	}
@@ -84,7 +89,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", address=" + address + ", city=" + city + ", state=" + state + ", zip=" + zip
-				+ ", deliveries=" + deliveries + ", restaurants=" + restaurants + "]";
+				+ ", restaurants=" + restaurants + "]";
 	}
 	
 }

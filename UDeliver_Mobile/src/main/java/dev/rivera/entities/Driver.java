@@ -11,7 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -31,9 +33,11 @@ public class Driver {
 	private String userName;
 	@Column(name="password")
 	private String passWord;
-	@OneToMany(mappedBy="driver", fetch=FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER,mappedBy="driver")
+	@JsonIgnoreProperties({"driver"})
 	private List<Restaurant> restaurants;
 	@OneToMany(mappedBy="driver", fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Delivery> deliveries;
 	public Driver() {
 		super();
@@ -79,12 +83,14 @@ public class Driver {
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
 	}
+	//@JsonManagedReference
 	public List<Restaurant> getRestaurants() {
 		return restaurants;
 	}
 	public void setRestaurants(List<Restaurant> restaurants) {
 		this.restaurants = restaurants;
 	}
+	//@JsonManagedReference
 	public List<Delivery> getDeliveries() {
 		return deliveries;
 	}
@@ -96,7 +102,7 @@ public class Driver {
 	@Override
 	public String toString() {
 		return "Driver [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-				+ ", passWord=" + passWord + ", restaurants=" + restaurants + ", deliveries=" + deliveries + "]";
+				+ ", passWord=" + passWord  + "]";
 	}
 
 

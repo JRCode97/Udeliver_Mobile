@@ -13,6 +13,8 @@ public interface DeliveryServiceI {
 	
 	List<Delivery> getDriverDeliveries(Integer driverId);
 	
+	List<Delivery> findDeliveriesByDate(int id);
+	
 	Delivery updateDelivery(Delivery delivery);
 	
 	void deleteDelivery(Delivery delivery);

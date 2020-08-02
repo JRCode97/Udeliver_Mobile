@@ -1,5 +1,7 @@
 package dev.rivera.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,36 @@ public class CustomerService implements CustomerServiceI {
 	@Override
 	public void deleteCustomer(Customer customer) {
 		cr.delete(customer);
+	}
+
+	@Override
+	public List<Customer> getCustomerByDriverId(int driverId) {
+		return cr.findCustomerByDriver(driverId);
+	}
+
+	@Override
+	public List<Customer> getAllCustomers() {
+		return cr.findAll();
+	}
+
+	@Override
+	public List<String> getBestTownNames(int id) {
+		return cr.getBestTowns(id);
+	}
+
+	@Override
+	public List<Double> getBestTownTotals(int id) {
+		return cr.getBestTownTips(id);
+	}
+
+	@Override
+	public List<String> getBestAvgAddress(int id) {
+		return cr.getBestAvgAddresss(id);
+	}
+
+	@Override
+	public List<Double> getBestAvgTip(int id) {
+		return cr.getBestAvgTip(id);
 	}
 
 }

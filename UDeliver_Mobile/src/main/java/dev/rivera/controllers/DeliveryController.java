@@ -1,5 +1,7 @@
 package dev.rivera.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,7 @@ public class DeliveryController {
 	
 	@PostMapping(value="/deliveries")
 	public Delivery createDelivery(@RequestBody Delivery delivery) {
+		System.out.println(delivery);
 		return ds.createDelivery(delivery);
 	}
 	@SuppressWarnings("unchecked")
@@ -37,6 +40,11 @@ public class DeliveryController {
 		}else
 		return null;
 	}
+	@GetMapping(value= {"/deliveries/week/{id}"})
+	public List<Delivery> getThisWeeksDeliveries(@PathVariable Integer id){
+		return ds.findDeliveriesByDate(id);
+	}
+
 	@PutMapping(value="/deliveries")
 	public Delivery updateDelivery(@RequestBody Delivery delivery) {
 		return ds.updateDelivery(delivery);
